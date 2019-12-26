@@ -23,7 +23,7 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String lastname;
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 120,unique = true)
     private String email;
 
     public long getId() {

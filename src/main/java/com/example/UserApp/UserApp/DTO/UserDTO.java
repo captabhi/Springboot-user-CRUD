@@ -86,10 +86,5 @@ public class UserDTO implements Serializable {
         this.emailVerificationStatus = emailVerificationStatus;
     }
 
-    private String email;
-    private String password;
-    private String encryptedPassword;
-    private String emailVerificationToken;
-    private Boolean emailVerificationStatus;
 
 }
