@@ -8,10 +8,7 @@ import com.example.UserApp.UserApp.model.Response.UserDetailsResponseModel;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/user")
 @RestController
@@ -29,5 +26,11 @@ public class UserController {
         UserDTO createdUser = userService.createUser(userDto);
         BeanUtils.copyProperties(createdUser,userResponse);
         return userResponse;
+    }
+
+    @GetMapping
+    public String getUser()
+    {
+        return "Get user was called";
     }
 }
