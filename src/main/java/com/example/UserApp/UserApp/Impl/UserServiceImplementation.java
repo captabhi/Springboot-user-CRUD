@@ -1,10 +1,12 @@
 package com.example.UserApp.UserApp.Impl;
 
+import com.example.UserApp.UserApp.DTO.AddressDTO;
 import com.example.UserApp.UserApp.DTO.UserDTO;
 import com.example.UserApp.UserApp.Entity.UserEntity;
 import com.example.UserApp.UserApp.Repository.UserRepository;
 import com.example.UserApp.UserApp.Service.UserService;
 import com.example.UserApp.UserApp.Utils.Utils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -34,13 +36,24 @@ public class UserServiceImplementation implements UserService {
 
         if(storedUserDetails != null) throw new RuntimeException("Record Already exists");
 
+        System.out.println(user.toString());
+
+        for(int i=0;i<user.getAddresses().size();i++)
+        {
+            AddressDTO addressDTO = user.getAddresses().get(i);
+            addressDTO.setAddressId(utils.generateAddressID(16));
+            addressDTO.setUserDTO(user);
+            user.getAddresses().set(i,addressDTO);
+
+        }
         UserEntity userEntity = new UserEntity();
-        BeanUtils.copyProperties(user,userEntity);
+        ModelMapper modelMapper = new ModelMapper();
+        userEntity = modelMapper.map(user,UserEntity.class);
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userEntity.setUserId(utils.generateUserID(16));
         UserEntity storedUser = userRepository.save(userEntity);
         UserDTO response = new UserDTO();
-        BeanUtils.copyProperties(storedUser,response);
+        response = modelMapper.map(storedUser,UserDTO.class);
 
         return response;
     }

@@ -1,6 +1,7 @@
 package com.example.UserApp.UserApp.DTO;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserDTO implements Serializable {
     private static final long SerialVersionUID=10l;
@@ -13,6 +14,19 @@ public class UserDTO implements Serializable {
     private String encryptedPassword;
     private String emailVerificationToken;
     private Boolean emailVerificationStatus = false;
+    private List<AddressDTO> addresses;
+
+    public static long getSerialVersionUID() {
+        return SerialVersionUID;
+    }
+
+    public List<AddressDTO> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressDTO> addresses) {
+        this.addresses = addresses;
+    }
 
     public long getId() {
         return id;
